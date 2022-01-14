@@ -1,0 +1,19 @@
+function solution(n) {
+    let answer = '';
+    const numArr = [4, 1, 2];
+    
+    while(n) {
+        answer = numArr[n%3] + answer;
+        // 0 == false
+        n = n%3 === 0 ? n/3 -1 : Math.floor(n/3); 
+    }
+     
+    return answer;
+}
+
+3진법을 이용
+
+진법이란
+10진법은 10번째에 자릿수가 바뀌고
+2진법은 2번째에 자릿수가 바뀐다. 0, 1, 11
+
