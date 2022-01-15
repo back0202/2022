@@ -1,0 +1,13 @@
+function solution(s)
+{
+    let answer = []
+   for(let i=0; i<s.length; i++){
+       if(s[i]===answer[answer.length-1]) answer.pop()
+       else answer.push(s[i])
+   }
+    return answer.length===0 ? 1 : 0
+}
+
+2단계부터는 시간복잡도가 중요한가 보다. 시간초과로 실패가 많이뜬다.
+처음에 while 무한반복을 쓰고 거기 안에 for문을 써서했는데 실패했다
+최대한 반복을 적게해서 풀여야겠따
