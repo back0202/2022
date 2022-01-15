@@ -1,0 +1,23 @@
+function solution(record) { 
+
+let answer = []; 
+const map = new Map(); 
+
+for (let i = 0; i < record.length; ++i) { 
+    const [state, uid, name] = record[i].split(' '); 
+    if (state == 'Leave') { 
+        answer.push([uid, '님이 나갔습니다.']); 
+        continue; 
+} if (state == 'Enter') { 
+      answer.push([uid, '님이 들어왔습니다.']); 
+      } 
+      map.set(uid, name); 
+      } 
+      return answer.map(ele => map.get(ele[0]) + ele[1]); }
+
+
+원래 풀던 if for만으로 풀면 시간초과 된다.
+new Map()을 이용해서 1234의 이름과 4567의 이름이 최종적으로 뭔지 정하고,
+반복을 줄이기 위해 answer에 엔터와 리브만 넣은 배열을 만든다. change는 '바꼈습니다'라고 하지 않기 때문에 필요없음.
+
+이렇게 하면 반복문은 1번만 사용하면 된다.
