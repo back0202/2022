@@ -44,3 +44,39 @@ shift를 이용해서 stack에 있는 숫자들을 너었다.
 
 https://velog.io/@sangbooom/Javascript-2%EC%B0%A8%EC%9B%90-%EB%B0%B0%EC%97%B4-%EB%A7%8C%EB%93%A4%EA%B8%B0
 1부터 36까지 숫자배열 
+
+
+function solution(rows, columns, queries) {
+    const a = [...Array(rows)].map((_, r)=>[...Array(columns)].map((_, c)=>r*columns+c+1));
+    const mins = [];
+
+    queries.map(query => {
+        const [x1, y1, x2, y2] = query.map(_=>_-1);
+        let min = a[x1][y1], tmp = a[x1][y1];
+
+        for(let i=x1;i<x2;i++) {
+            a[i][y1] = a[i+1][y1];
+            min = Math.min(min, a[i][y1]);
+        }
+        for(let i=y1;i<y2;i++) {
+            a[x2][i] = a[x2][i+1];
+            min = Math.min(min, a[x2][i]);
+        }
+        for(let i=x2;i>x1;i--) {
+            a[i][y2] = a[i-1][y2];
+            min = Math.min(min, a[i][y2]);
+        }
+        for(let i=y2;i>y1;i--) {
+            a[x1][i] = a[x1][i-1];
+            min = Math.min(min, a[x1][i]);
+        }
+        a[x1][y1+1] = tmp;
+
+        mins.push(min);
+    })
+
+    return mins;
+}
+내가 생각했던 gra[i][j]에 넣을 수도 있네
+순서가 역으로 진행 되고 
+맨앞 숫자를 미리 빼놓고 73번줄 처럼 미리 뺴놓은걸 넣
