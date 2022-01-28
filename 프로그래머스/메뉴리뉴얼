@@ -1,0 +1,29 @@
+function solution(orders, course){ 
+  let tmp = new Map()      //1.Map을 이용해 가장 많이 카운터된 조합이 먼지 구한다
+  let answer = []          //2.정답
+  function DFS(y, idx, len, arr){
+    if(len === arr.length){                    //7.배열과 구할라고 했던 조합이 같으면
+      let j = arr.sort().join('')                  //8.조합은 오름차순으로 조합해서 중복을 피하라고 했으니 .sort()하고 .join을 이영해서 합친다
+      if(tmp.has(j)) tmp.set(j, tmp.get(j)+1)      //9.1번객체에 있으면 +1 
+      else tmp.set(j, 1)                            //10, 없으면 1
+    }else{
+      for(let i=idx; i<y.length; i++){        //5.한사람이 시킨 메뉴를 0번인덱스 부터 끝까지 돌림
+        DFS(y, i+1, len, [...arr, y[i]])      //6.y는 한사람이 시킨 메뉴, i+1는 인덱스에 1을 더해서 같은 자리 조합을 피한다
+      }                                       //len 며개를 조합 할것인가, 
+    }                                         //[...arr, y[i]] 조합
+  }
+  course.map(x=>                     //3.course는 몇개를 조합 할것인가, map을 이용해서 하나씩 불러냄
+    orders.map(y=>DFS(y, 0, x, []))   //4. orders는 한사람이 시킨 메뉴조합, DFS를 이용해서 조합을 구한다, y는 한사람이 시킨 메뉴, 0은 인덱스, x는 몇개 조합, []은 조합
+    )
+   tmp = [...tmp.entries()].filter(x=>x[1]>1)   //11.왜 이렇게 배열안에 entries를 풀어주는지는 모르겠다. 객체를 배열화, filter을 이용해서 2명이상 시켜야하는 조건 설정
+    course.map(x=>{                           //12.조합별로 최대 많이 시킨 조합을 찾는다
+      let max = 0                        //13.for을 이용해서 max를 찾을라 했는데 map안에서는 for문 사용이 안돼네
+      let tt =tmp.filter(([k,v])=>{       //14. [k,v]이렇게 나눠서
+        if(k.length===x && v>max) max=v    //15.조합의 길이가 같으며 max보다 크면 max값 바꾼다.
+        return k.length === x              //16.조합의 길이가 같은 것만 빼준다
+      })
+      tt.filter(y=>y[1]===max).map(y=>answer.push(y[0]))   //17.filter을 이용해서 가장 많이 시킨 거 찾아서 answer에 넣오주기
+     } )
+     answer.sort()        //18.오름차순으로 하라
+     return answer
+}
