@@ -1,0 +1,43 @@
+function solution(places)
+{
+    var answer = places.map(place => {
+        // 결과가 true 이면 거리두기가 지켜지지 않음
+        return place.some((row, rowIndex) => {
+            // true 이면 거리두기가 지켜지지 않음, 바로 종료
+            return row.split('').some((column, index, arr) => {
+                // 파티션이 있으면 거리두기 지킴
+                if (column == 'X') return false;
+
+                // 상하좌우에 P가 몇개인지 조회
+                const userCount = [
+                    arr[index - 1] || null, // 좌
+                    arr[index + 1] || null, // 우
+                    (place[rowIndex - 1] || '').charAt(index), // 상
+                    (place[rowIndex + 1] || '').charAt(index), // 하
+                ].filter(v => v == 'P').length;              
+                
+                if((column == 'P' && userCount > 0) || // P기준 상하좌우에 P가 있는지
+                   (column == 'O' && userCount >= 2)) { // O기준 상하좌우에 P가 2개 이상인지
+                    return true;
+                }
+
+                return false;
+            }, '');
+        }) ? 0 : 1;
+    });
+
+    return answer;
+}
+
+some은 배열에서 쓸수 있고 하나라도 true면 true
+모두 flase면 false
+기존배열의 값은 변경되지 않는다. 
+arr.some(function(currentValue, index, array), thisValue)) 값, 인덱스, 배열
+
+||는 참인거 반호나 or이다 a||b   a가먼저 평가받고 그다음에 b
+
+charat(idx)은 문자열에서 idx번에 뭐가 있는지 찾아 반환 
+
+
+조건은 p기준으로 상하좌우에 p가 하나라도 나오면 거리두기 실패고
+O의 기준으로 상하좌우에 p가 2개이상 있으면 거리두기 실패임.
