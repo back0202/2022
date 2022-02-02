@@ -7,7 +7,7 @@ function solution(places)
                 const userCount = [
                     arr[index - 1] || null, // 좌
                     arr[index + 1] || null, // 우
-                    (place[rowIndex - 1] || '').charAt(index), // 상
+                    (place[rowIndex - 1] || '').charAt(index), // 상      (place[rowIndex - 1] || '')해주는 이유는 undifind일떄 .charAt()이 오류뜨기 때문에, undifind일떄 ''빈문열반환
                     (place[rowIndex + 1] || '').charAt(index), // 하
                 ].filter(v => v == 'P').length;              
                 
