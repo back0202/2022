@@ -1,14 +1,9 @@
 function solution(places)
 {
     var answer = places.map(place => {
-        // 결과가 true 이면 거리두기가 지켜지지 않음
         return place.some((row, rowIndex) => {
-            // true 이면 거리두기가 지켜지지 않음, 바로 종료
             return row.split('').some((column, index, arr) => {
-                // 파티션이 있으면 거리두기 지킴
                 if (column == 'X') return false;
-
-                // 상하좌우에 P가 몇개인지 조회
                 const userCount = [
                     arr[index - 1] || null, // 좌
                     arr[index + 1] || null, // 우
@@ -41,3 +36,5 @@ charat(idx)은 문자열에서 idx번에 뭐가 있는지 찾아 반환
 
 조건은 p기준으로 상하좌우에 p가 하나라도 나오면 거리두기 실패고
 O의 기준으로 상하좌우에 p가 2개이상 있으면 거리두기 실패임.
+some이 하나라도 true면 true닌깐, 거리두기를 실패 했을떄 true반환
+21번 라인에서 실패했을때 true닌깐 0
