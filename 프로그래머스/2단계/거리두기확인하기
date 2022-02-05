@@ -2,7 +2,7 @@ function solution(places)
 {
     var answer = places.map(place => {
         return place.some((row, rowIndex) => {
-            return row.split('').some((column, index, arr) => {
+            return row.split('').some((column, index, arr) => {                     split안쓰고면 column은 문자열의 첫번쨰를 반환하는게 아니라 문자열 그 자체를 반환.
                 if (column == 'X') return false;
                 const userCount = [
                     arr[index - 1] || null, // 좌
@@ -36,5 +36,7 @@ charat(idx)은 문자열에서 idx번에 뭐가 있는지 찾아 반환
 
 조건은 p기준으로 상하좌우에 p가 하나라도 나오면 거리두기 실패고
 O의 기준으로 상하좌우에 p가 2개이상 있으면 거리두기 실패임.
+실패일때는 true
+o랑 p 상하좌우에 거리 두기 성공이면 false, x일떄도 false
 some이 하나라도 true면 true닌깐, 거리두기를 실패 했을떄 true반환
 21번 라인에서 실패했을때 true닌깐 0
