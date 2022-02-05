@@ -40,3 +40,55 @@ O의 기준으로 상하좌우에 p가 2개이상 있으면 거리두기 실패�
 o랑 p 상하좌우에 거리 두기 성공이면 false, x일떄도 false
 some이 하나라도 true면 true닌깐, 거리두기를 실패 했을떄 true반환
 21번 라인에서 실패했을때 true닌깐 0
+
+
+function solution(places) {
+    let answer = [];
+    
+    const inBound = val => val >= 0 && val < 5;
+    
+    for(const place of places){
+        place.map((row, idx) => {
+            place[idx] = row.split('');
+        });
+        
+        const isPerson = (r,c) => place[r][c] === 'P';
+        const isEmpty = (r,c) => place[r][c] === 'O';
+        
+        const keepRight = place.every((row, r) => 
+            row.every((seat, c) => {
+                if(seat === 'P'){
+                    if(inBound(r+1)){
+                        if(isPerson(r+1, c)) return false;
+                        if(isEmpty(r+1, c)){
+                            if(inBound(c+1) && isPerson(r+1, c+1)) return false;
+                            if(inBound(c-1) && isPerson(r+1, c-1)) return false;
+                            if(inBound(r+2) && isPerson(r+2, c)) return false;
+                        }
+                    }
+                    if(inBound(r-1)){
+                        if(isPerson(r-1, c)) return false;
+                        if(isEmpty(r-1, c)){
+                            if(inBound(c+1) && isPerson(r-1, c+1)) return false;
+                            if(inBound(c-1) && isPerson(r-1, c-1)) return false;
+                            if(inBound(r-2) && isPerson(r-2, c)) return false;
+                        }
+                    }
+                    if(inBound(c+1)){
+                        if(isPerson(r, c+1)) return false;
+                        if(isEmpty(r, c+1) && inBound(c+2) && isPerson(r, c+2)) return false;
+                    }
+                    if(inBound(c-1)){
+                        if(isPerson(r, c-1)) return false;
+                        if(isEmpty(r, c-1) && inBound(c-2) && isPerson(r, c-2)) return false;
+                    }
+                }
+                return true;
+            })
+        )
+        answer.push(keepRight ? 1 : 0);
+    }
+    
+    return answer;
+}
+
