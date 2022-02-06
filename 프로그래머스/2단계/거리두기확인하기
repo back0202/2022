@@ -55,7 +55,7 @@ function solution(places) {
         const isPerson = (r,c) => place[r][c] === 'P';
         const isEmpty = (r,c) => place[r][c] === 'O';
         
-        const keepRight = place.every((row, r) => 
+        const keepRight = place.every((row, r) =>                                               
             row.every((seat, c) => {
                 if(seat === 'P'){
                     if(inBound(r+1)){
