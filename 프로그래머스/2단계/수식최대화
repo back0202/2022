@@ -1,3 +1,8 @@
+못 푼이유는 dfs로 풀려고 했는데 실패
+밑에 처럼 조합을 따로 구해 놓고 했으면 됐는데 너무 dfs로 조합을 구하면서 연산도 할려고 했음
+한번에 코드도 깔끔하게 해야겠다는 욕심이 있었음. 차근차근 하나씩 해서 풀고 깔끔하고 다듬자
+
+우선순위를 구하고 계산한 다음 절대값 기준 최대가 뭔지 찾는 문제
 const solution = (expression) => {
   const arr = [                                           1.조합은 최대6개
     ["+", "-", "*"],
@@ -58,3 +63,86 @@ const solution = (expression) => {
   }
   return maxNum;
 };
+
+
+
+https://velog.io/@johnyejin/JavaScript-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-%EC%88%98%EC%8B%9D-%EC%B5%9C%EB%8C%80%ED%99%94-LEVEL2
+const operator = {
+    '+': (a, b) => a + b,                                                         
+    '-': (a, b) => a - b,
+    '*': (a, b) => a * b,
+};
+
+function solution(expression) {
+    let answer = 0;
+    const permutation = [
+        ['+', '-', '*'],
+        ['+', '*', '-'],
+        ['-', '+', '*'],
+        ['-', '*', '+'],
+        ['*', '-', '+'],
+        ['*', '+', '-']
+    ];
+    const numArr = expression.split(/[^0-9]/).map(num => +num);
+    const opArr = expression.match(/[\+\-\*]/g);                                 [\+\-\*] +,-,*따로고 \+\-\*는 +-*다                
+    
+    for (const permu of permutation) {
+        let copyNum = [...numArr];
+        let copyOp = [...opArr];
+        let opIdx = 0;                                                 
+        
+        while (true) {
+            for (let i=0; i<copyOp.length; i++) {
+                if (copyOp[i] === permu[opIdx]) {
+                    copyNum[i] = operator[copyOp[i]](copyNum[i], copyNum[i + 1]);               객체를 호출하는거 신기하네. return도 안쓰고
+                    copyNum.splice(i + 1, 1);
+                    copyOp.splice(i, 1);
+                    i--;
+                }
+            }
+            opIdx++;
+            
+            if (copyNum.length === 1) break;
+        }
+        
+        if (Math.abs(copyNum[0]) > answer) answer = Math.abs(copyNum[0]);
+    }
+
+    return answer;
+}
+
+
+
+https://gobae.tistory.com/75
+function solution(expression) {
+  function calculator(a, b, oper) {
+    if (oper === "+") return a + b;
+    if (oper === "*") return a * b;
+    if (oper === "-") return a - b;
+  }
+  const combinations = [
+    ["+", "*", "-"],
+    ["+", "-", "*"],
+    ["*", "+", "-"],
+    ["*", "-", "+"],
+    ["-", "*", "+"],
+    ["-", "+", "*"],
+  ];
+  let answer = Number.MIN_SAFE_INTEGER;
+
+  combinations.forEach((combination) => {
+    const operands = expression.match(/[0-9]+/g).map(Number);                       [0-9]+  +는 앞에있는거 1회이상 반복, 숫자아닌거 만나면끝. map(Number)만 해줘도 숫자로 바뀌네 신기하네
+    const operators = expression.match(/[\*\+\-]/g);
+    combination.forEach((c) => {
+      let idx = operators.indexOf(c);
+      while (idx !== -1) {
+        operands[idx] = calculator(operands[idx], operands[idx + 1], c);
+        operands.splice(idx + 1, 1);
+        operators.splice(idx, 1);
+        idx = operators.indexOf(c);
+      }
+    });
+    if (answer < Math.abs(operands[0])) answer = Math.abs(operands[0]);
+  });
+  return answer;
+}
