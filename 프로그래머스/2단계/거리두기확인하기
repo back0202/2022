@@ -92,3 +92,50 @@ function solution(places) {
     return answer;
 }
 
+
+https://leego.tistory.com/entry/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-%EA%B1%B0%EB%A6%AC%EB%91%90%EA%B8%B0-%ED%99%95%EC%9D%B8%ED%95%98%EA%B8%B0-2021-%EC%B9%B4%EC%B9%B4%EC%98%A4-%EC%9D%B8%ED%84%B4%EC%8B%AD-JavaScript
+
+function name(places) {
+  let udlr = (x,y)=>x>=0 && y>=0 && x<places.length && y<places.length                 7.이제 상하좌우 확인하기 위해 범위 안에 들어가는지
+  let tt = (x,y,ch)=>udlr(x,y) && ch[x][y]===0                                         7-1. 범위안에 들어가면서 한번도 확인안했는지. 코딩길이 줄일려고 하는거 같음 
+  let pst = [[0,-1],[0,1],[-1,0],[1,0]]                                                7-2. 좌 우 상 하 
+   function BFS(start, ch, place){
+    let q = [start]                                                                     4.start([i,j,0])에 []안감싸면 q에 값이 안들어감 왜지?
+    while (q.length>0) {                                                                5. while문을 돌려서 거리 2이하에 'P'가 있는지 찾는다
+      let [x,y,n] = q.shift()                                                           6. 이걸 여기 쓰는 이유는 q는 거리가 1일때 갈수있는 인덱스, 2일때 갈수있는 인덱스 다 넣기땜ㄴ에
+      if(n!==0 && place[x][y]==='P') return false                                       8. q에 넣은 위치가 'P'면 거리두기 실패
+      pst.forEach(([nx,ny]) => {                                                        7-3. forEach를 이용해서 좌우상하 호출.[nx,ny]로 한이유는 코딩길이 줄일려고  
+        let _x = x+nx                                                                   7-4. x y구해줌
+        let _y = y+ny
+        if(tt(_x,_y,ch) && place[_x][_y]!=='X'){                                         7-5. 상하좌우가 한번도 체크가 안돼고 범위안에 들고 x면 거기로는 거리두기 되고 있ㅇ니
+          if(n<2){                                                                       7-6. 2이하
+            ch[_x][_y]=1                                                                 7-7. 다시 확인안하게 체크
+            q.push([_x,_y,n+1])                                                          7-8. q에 너어서 p가 있는지 검사할ㄹ고
+          }
+        }
+      });
+    }
+     return 1               9. 반복 다 돌고 'P'가 없으면 성공         
+  }
+  let a = place=>{
+      let ch = Array.from({length: places.length}, ()=>Array(places.length).fill(0))     2. 체크 배열을 안들어서 확인 한걸 체크해서 반복을 줄인다.
+      for(let i=0; i<places.length; i++){                                                3. 2중 for문을 만들어서 2차원배열에 'P'를 찾아서, 그 인덱스 주위에 'P'가 있는걸 찾는다
+           for(let j=0; j<places.length; j++){
+           if(place[i][j]!=='P') continue                                                3-1. 2중for문에서 찾은 자리가 'P'가 아니라면 3-2, 3-3 무시하고 다음 반복진행
+                                                                                              'P'가 아니라면 반복을 할필요가 없기때문. continue를 써서 쓸데없는 반복 줄이는거 같다
+           ch[i][j]=1                                                                    3-2. 'P'면 그자리를 체크해서 다시 확인할 필요가 없게 체크
+           if(!(BFS([i,j,0],ch,place))) return 0                                         3-3. 'P'면 BFS함수에 [i,j,0],ch,place를 너어준다. i,j는 인덱스고 0은 몇번 반복했는지 확인할
+                                                                                              카운터다. 문제가 거리가 2이하에 'P'를 찾는거라서. [i,j,0]을 배열로 감싼건 짧게줄일려고
+                                                                                              ch, place(배열)을 같이 넘겨야지 BFS함수에서 ch, place를 참고 할수있다.
+                                                                                              return 0인 이유는 BFS함수가 false가 나온다면(거리2이하에 'P'가 나온다면 거리두기 실패라 false)
+                                                                                              거리두기 실패라 0을 리턴 하나라도 'P'가 나오면(map으로 a를 호출했자나, map은 배열을 return하기때문에 나중에[1,0,0]이래 나옴)
+                                                                                              
+      
+      }                                                                                       
+    }
+    return 1                                                                             3-4. 'P'가 하나도 안나오면 거리두기 성공
+  }
+  return places.map(a)           1.map함수로 a호출
+}
+let places = [["POOOP", "OXXOX", "OPXPX", "OOXOX", "POXXP"], ["POOPX", "OXPXP", "PXXXO", "OXXXO", "OOOPP"], ["PXOPX", "OXOXP", "OXPOX", "OXXOP", "PXPOX"], ["OOOXX", "XOOOX", "OOOXX", "OXOOX", "OOOOO"], ["PXPXP", "XPXPX", "PXPXP", "XPXPX", "PXPXP"]]
+console.log(name(places))
