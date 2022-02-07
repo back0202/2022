@@ -1,0 +1,14 @@
+조합으로 가장큰수 마지막에 문자열로
+function solution(numbers) {
+    let strings = numbers.map(num => num + "").sort((a,b) => (b+a) - (a+b)).join('');    문자로 만들어 주는 이유는 + -를 찾는게 아니라 문자조합으로 가장 큰거라서
+    return strings[0] === "0" ? "0" : answer;                                            (b+a)-(a+b)를 왜 했냐면 내림차순으로 할려고 배열을 문자열로 합칠려고                                  
+}
+
+그냥 .sort((a,b)=> a-b) 하면 숫자로 되서 안되는듯. 
+
+
+https://miiingo.tistory.com/343
+function solution(numbers) {
+    var answer = numbers.map((number) => number.toString()).sort((a, b) => (b+a) - (a+b)).join("");
+    return answer.replace(/^0+/, "0");                 ^0+ 맨앞에 0이 한번이상나오면 0호출, 
+}
