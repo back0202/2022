@@ -1,0 +1,26 @@
+function name(numbers) {
+  let set = new Set
+  let sp = numbers.split('')
+  function sosu(n){
+    if(n<2) return false
+    for(let i=2; i<Math.sqrt(n); i++){
+      if(n%i===0) return false
+    }
+    return true
+  }
+  function dfs(set, arr, str){
+    if(arr.length>=1){
+    for(let i=0; i<arr.length; i++){
+      let tmp = str+arr[i]
+      let sl = [...arr]                                                      [...arr]은 깊은복사다. 원본배열 arr은 변화 없다. 
+      sl.splice(i,1)                                                      배열을 삭제해서 []나오면 undifined가 아니라 length는 0이다
+      if(sosu(parseInt(tmp)))        set.add(parseInt(tmp))
+      dfs(set, sl, tmp)
+    }
+    }
+  }
+  dfs(set, sp, '')
+  return set.size
+}
+let numbers="011"	
+console.log(name(numbers))
