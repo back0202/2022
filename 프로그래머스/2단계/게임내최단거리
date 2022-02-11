@@ -1,0 +1,37 @@
+function solution(maps){
+  let q = [[0,0]]
+  let answer =0
+  let n = maps.length
+  let m = maps[0].length
+  let dx = [-1,0,1,0]
+  let dy = [0,-1,0,1]
+  maps[0][0]=0
+  let result = 0
+  while(q.length){
+    let len = q.length
+    answer++
+    for(let i=0; i<len; i++){
+      let a= q.shift()
+      if(a[0]===n-1 && a[1]===m-1) {
+        result=1
+        break                                                         break를 쓰면 while문이 끝나는게 아니라 for문이 끝나서 계속 반복한다.그래서 실패
+                                                                      return answer로 수정하면 됨
+      }
+      for(let k=0; k<dx.length; k++){
+      let nx = a[0]+dx[k] 
+      let ny = a[1]+dy[k]
+      if(nx>=0 && ny>=0 && nx<n && ny<m && maps[nx][ny]!==0){
+        maps[nx][ny]=0
+        q.push([nx,ny])
+      }
+    }}
+  }
+  return result===0 ? -1 : answer                                                          
+}
+let maps = [[1,0,1,1,1],[1,0,1,0,1],[1,0,1,1,1],[1,1,1,0,0],[0,0,0,0,1]]
+console.log(solution(maps))
+
+dfs로 풀었을떄 실패함. 이런최단거리를 구할때는 bfs로 풀어야 한대. 이게 가장짧대
+
+
+
