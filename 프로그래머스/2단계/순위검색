@@ -1,0 +1,61 @@
+function solution(info, query) {
+    const answer = [];
+    const infoMap = {};
+    
+    function combination(array, score, start) {
+        const key = array.join("");
+        const value = infoMap[key];
+        
+        if (value) {
+            infoMap[key].push(score);             
+        } else {  
+            infoMap[key] = [score];                                             add이런거 안써도 infomap[key]=[score] 만으로 객체에 너어 지네
+        }
+        
+        for (let i = start; i < array.length; i++) {
+            const temp = [...array];                                           그냥 key값을 쓰면 되는데 tmp를 깊은 복사를 하는 이유는 조합을 만들어 주는데 key맨 앞에 -를 넣으면
+            temp[i] = "-";                                                     조합이 안만들어짐
+            combination(temp, score, i + 1);
+        }
+    }
+    
+    for (const e of info) {
+        const splited = e.split(" ");
+        const score = Number(splited.pop());
+        combination(splited, score, 0);
+    }
+    
+    for (const key in infoMap) {
+        infoMap[key] = infoMap[key].sort((a, b) => a - b);
+    }
+    
+    for (const e of query) {
+        const splited = e.replace(/ and /g, " ").split(" ");                    and 앞 뒤로 공백이 있으면 저렇게 제거 할수 있음
+        const score = Number(splited.pop());
+        const key = splited.join("");                                           join을 splitd뒤에다가 붙이면 되는데 이렇게 한 이유는 score가 pop을 해줘야하는데
+        const array = infoMap[key];                                             join은 문자열을 반환 하기 때문에 pop을 쓸수 없어서
+        
+        if (array) {
+            let start = 0;
+            let end = array.length;
+            while (start < end) {
+                const mid = Math.floor((start + end) / 2);                     위에서 sort를 해줘서 순서대로 있음. mid이 크다면 그 뒤에 순번도 큼. 순서대로라서
+                                                                               그러니 mid 앞번부터 다시 확인.반대로 mid번이 작으면 그앞에건 다 작음. 그러디 그다음거 확인 
+                if (array[mid] >= score) {                                     start번은 통과된것중 가장 작은 번호.
+                    end = mid;
+                } else if (array[mid] < score) {
+                    start = mid + 1;
+                }
+            }
+            
+            const result = array.length - start;                               마지막에 원래 길이랑 통과된 것중 가장 작은 번호를 빼면 통과한 숫자
+            answer.push(result);
+        } else {
+            answer.push(0);
+        }
+    }
+    
+    return answer;
+}
+
+왜 객체로 하는게 좋은지 모르갰따. 공간복잡도 때문인가. 자료구조에 대해서 좀더 알았으면 좋겠다
