@@ -1,0 +1,67 @@
+const fs = require('fs');
+let input = fs.readFileSync('/dev/stdin').toString().split('\n');
+
+let NM = input.shift().split(' ');
+let N = Number(NM.shift());
+let M = Number(NM.shift());
+let white = ['WBWBWBWB', 'BWBWBWBW', 'WBWBWBWB', 'BWBWBWBW', 'WBWBWBWB', 'BWBWBWBW', 'WBWBWBWB', 'BWBWBWBW']           비교할거 미리 만들어 주기
+let black = ['BWBWBWBW', 'WBWBWBWB', 'BWBWBWBW', 'WBWBWBWB', 'BWBWBWBW', 'WBWBWBWB', 'BWBWBWBW', 'WBWBWBWB']
+
+let board = [];
+for (let i = 0; i < N; i++) {
+  board[i] = input.shift().split('');
+}
+
+let answer = 90;
+
+for (let i = 0; i <= N - 8; i++) {                       8을빼는이유는 배열의 크기를 안넘을라고
+  for (let j = 0; j <= M - 8; j++) {
+    check(j, i);
+  }
+}
+
+function check(x, y) {
+  let checkWhite = 0;
+  let checkBlack = 0;
+
+  for (let i = y; i < y + 8; i++) {                                    x랑 y을 뒤집는 이유는 모르겠다. 다시 뒤집어서 해도 답은 같다
+    for (let j = x; j < x + 8; j++) {                                  8을 더하는이유는 기준이 8*8까지 탐색해야 해서
+      if (board[i][j] !== white[i-y][j-x])
+        checkWhite++;
+      if (board[i][j] !== black[i-y][j-x])
+        checkBlack++;
+    }
+  }
+
+  let min = checkBlack < checkWhite ? checkBlack : checkWhite;
+  
+  if (min < answer)
+    answer = min;
+}
+
+console.log(answer);
+
+
+const [n, m, ...board] = require("fs").readFileSync("/dev/stdin").toString().trim().split(/\s/);
+const lines = ["WBWBWBWB", "BWBWBWBW"]
+let min = 64;
+for (let i=0; i<=n-8; i++) {
+    for (let j=0; j<=m-8; j++) {
+        for (let oe=0; oe<2; oe++) {
+            let count = 0;
+            for (let x=i; x<i+8; x++) {
+                for (let y=j; y<j+8; y++) {
+                    if (board[x][y] !== lines[(x+oe)%2][y-j]) {                    화이트랑 블랙둘다 lines반복이닌깐. 이렇게 반복도 가능
+                        count++;
+                    }
+                }
+            }
+            if (min > count) min = count;
+        }
+    }
+}
+console.log(min);
+
+
+이문제에 핵심은 어떡해 비교를 하느냐. 여기서는 비교할 배열을 만들어서 비교를 함.
+그리고 8*8까지만 비교해야해서 어떡게 범위를 설정을 하느냐. 
