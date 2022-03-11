@@ -1,0 +1,13 @@
+const n = +require("fs").readFileSync("/dev/stdin").toString()
+let num = 666;
+let count = 1;
+while (count !== n) {
+    num++;
+    if (String(num).includes("666")) count++;
+}
+console.log(num);
+
+나는 666이 붙어 있기때문에 앞뒤로 숫자들을 순서대로 붙여 줄라했는데 안되더라. 
+그리고 답은 더 쉬운 방법이 있었다.
+핵심은 666이 이후부터 1씩늘어나면서 666이 나올떄마다 cnt를 늘려주는거다.
+이건 외울수 밖에 없다.
