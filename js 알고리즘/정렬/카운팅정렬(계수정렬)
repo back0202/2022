@@ -1,0 +1,41 @@
+정렬 중에 그나마 빠른 힙정렬의 경우에도 시간복잡도 O(Nlog₂N)인데 
+
+계수정렬은 시간복잡도가 O(N)으로 굉장히 빠르다.
+
+그러나 정렬해야할 수의 범위가 작을 때에만 유리
+
+메모리가 낭비되고 반복문도 불필요하게 돌아야 한다.
+
+ 주어진 원소들을 반복문으로 돌며 각 원소의 개수를 카운팅한다.
+
+카운팅한 개수만큼 원소들을 나열해준다.
+
+let input = [10,
+  5,
+  2,
+  3,
+  1,
+  4,
+  2,
+  3,
+  5,
+  1,
+  7]
+
+let n = input.shift()
+let max = Math.max(...input)
+let arr =Array(max+1).fill(0)
+for(let i=0; i<n; i++){
+  arr[input[i]]++
+}
+let answer = []
+for(let i=0; i<arr.length; i++){
+  if(arr[i]){
+    let num = Array(arr[i]).fill(i)
+    answer=answer.concat(num)       
+  }
+}
+console.log(answer)
+
+concat
+기존배열에 합치는거
