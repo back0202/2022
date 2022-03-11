@@ -1,0 +1,28 @@
+j-1 부터 0까지 돌려서 i를 어디 넣어줄건가
+
+시간 복잡도
+최선의 경우 : O(N)
+최악의 경우 : O(N^2)
+평균 : O(N^2)
+
+장점
+안정적인 정렬 알고리즘이다.
+배열이 대부분 정렬되어 있는 경우에 매우 효율적이다
+
+단점
+배열 안의 요소들의 이동 수가 많다.
+배열의 크기가 큰 경우 시간이 오래 걸린다.
+
+let input = [13, 5, 11, 7, 23, 15]
+
+for(let i=0; i<input.length; i++){
+  let tmp = input[i], j
+  for(j=i-1; j>=0; j--){
+    if(tmp<input[j]){
+      input[j+1]=input[j]
+    }else break
+  }
+  input[j+1]=tmp
+}
+
+console.log(input)
