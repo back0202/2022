@@ -1,1 +1,31 @@
-ㄹ
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GitHub</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">        //인터넷 익스플러를 사용할때 content="IE=edge" 최신버전으로 사용하겠다
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, minimum-scale=1">  //반응형. initial-scale=1.0(초기화면설정비율)
+    <meta name="author" content="baek"> //name="author"(제작자)    content="baek"(내이름)                                        //user-scalable=no(손가락확대ㄴㄴ) maximum-scale=1, minimum-scale=1 설정하므로써 손가락확대 ㄴㄴ
+    <meta name="descrition" content="GitHub is where people build software. More than 31 million people use GitHub to discover, fork, and contribute to over 100 million projects."> 
+          //name="descrition"(설명)
+    <!-- http://ogp.me/ -->  //op=오픈그래프, 정보제공, 페이스북사용
+    <meta property="og:type" content="website">   //type은 website      
+    <meta property="og:site_name" content="GitHub">   //사이트 이름 
+    <meta property="og:title" content="Build software better, together">  //사이트 제목
+    <meta property="og:description" content="GitHub clone coding / GitHub is where people build software. More than 31 million people use GitHub to discover, fork, and contribute to over 100 million projects.">
+    <meta property="og:image" content="img/logo__github.png">   //대표이미지
+    <meta property="og:url" content="https://github.com">    //실제 주소
+
+    <!-- https://developer.twitter.com/en/docs/tweets/optimize-with-cards/guides/getting-started.html -->
+    <meta property="twitter:card" content="summary">   //type이랑 같음
+    <meta property="twitter:site" content="GitHub">    //이름
+    <meta property="twitter:title" content="Build software better, together">
+    <meta property="twitter:description" content="GitHub clone coding / GitHub is where people build software. More than 31 million people use GitHub to discover, fork, and contribute to over 100 million projects.">
+    <meta property="twitter:image" content="img/logo__github.png">
+    <meta property="twitter:url" content="https://github.com">
+
+</head>
+<body>
+    
+</body>
+</html>
