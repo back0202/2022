@@ -1,0 +1,16 @@
+body에 스타일을 많이 가지고 있는건 좋지 않다
+그래서 이렇게 따로 설정
+.body__container {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #333;
+}
+기본
+font-size: 16px;
+font-weight: 400;
+
+BEM작명규칙
+__ ~의 일부분
+-- ~의 상태
+- 일반적인 작명
